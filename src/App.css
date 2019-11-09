@@ -1,0 +1,65 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+
+body{
+	background-image: url('lib.png');
+	background-repeat: repeat;
+}
+
+img {
+    max-width:100px;
+    height:auto;
+}
+
+
+#myInput {
+  background-image: url('https://www.w3schools.com/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+h2 { 
+  text-align: center; color: #f2f2f2; background-color: #006467; font-size: 70px; line-height: 74px; font-weight: 700; margin: 0 5px 24px; padding: 10px; margin: 0 5px 24px; font-family: 'Libre Baskerville', serif; }
+
+
+#cor1{
+	background-color:#8F6A3D;
+}
+
+
+#cor{
+	background-color:#D9CDA6;
+}
+
+#botao{
+	background-color: #006467; 
+	color: white;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
