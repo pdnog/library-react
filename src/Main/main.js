@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as firebase from 'firebase';
 
 export default class Main extends Component {
     state = {
@@ -8,22 +9,22 @@ export default class Main extends Component {
         newBookRead: '',
         books: [],
     };
-    handleReceberAutor = a =>{
-        this.setState({newAuthor: a.target.value });
+    handleReceberAutor = a => {
+        this.setState({ newAuthor: a.target.value });
     };
 
-    handleReceberTitulo = b =>{
-        this.setState({newTitle: b.target.value });
+    handleReceberTitulo = b => {
+        this.setState({ newTitle: b.target.value });
     };
 
-    handleReceberPaginas = c =>{
-        this.setState({newPages: c.target.value });
+    handleReceberPaginas = c => {
+        this.setState({ newPages: c.target.value });
     };
 
     handleReceberStatus = d => {
-        this.setState ({newBookRead : d.target.value})
+        this.setState({ newBookRead: d.target.value })
     }
-   
+
     handleSubmitState = async z => {
         z.preventDefault();
         const {
@@ -34,10 +35,10 @@ export default class Main extends Component {
             books,
         } = this.state;
         const bookSchema = {
-            title : newTitle,
-            author : newAuthor,
-            pages : newPages,
-            read : newBookRead,
+            title: newTitle,
+            author: newAuthor,
+            pages: newPages,
+            read: newBookRead,
 
         };
         this.setState(
@@ -48,10 +49,81 @@ export default class Main extends Component {
                 newBookread: false,
                 newPages: 0,
             });
+        firebase.database().ref().push(bookSchema);
     }
 
+    // initialize = async f => {
+    //     f.preventDefault();
+    //     const {
+    //         newTitle,
+    //         newAuthor,
+    //         newPages,
+    //         newBookRead,
+    //         books,
+    //     } = this.state;
+    //     console.log(this.state);
+    //     var ref = firebase.database().ref();
+    //     let booksDB = this.state.books;
+    //     ref.on("value", function (snapshot) {
+    //         snapshot.forEach(function (childSnapshot) {
+    //             var item = childSnapshot.val();
+
+    //             var booksFromDatabase = {
+    //                 title: item.title,
+    //                 author: item.author,
+    //                 pages: item.pages,
+    //                 read: item.read,
+    //             };
+    //             booksDB.push(booksFromDatabase)
+    //         });
+    //     });
+    //     console.log(booksDB);
+    //     this.setState(
+    //         {
+    //             books: [booksDB],
+    //         });
+    //     console.log(this.state.books);
+    // }
+
+    // initialize = async f => {
+    //     f.preventDefault();
+    //     const {
+    //         newTitle,
+    //         newAuthor,
+    //         newPages,
+    //         newBookRead,
+    //         books,
+    //     } = this.state;
+    //     var ref = firebase.database().ref();
+    //     ref.on("value", function (snapshot) {
+    //         snapshot.forEach(function(childSnapshot) {
+    //             var item = childSnapshot.val();
+    //             item.key = childSnapshot.key;
+    //             console.log(item.title);
+    //             console.log(item.author)
+    //             console.log(item.pages);
+    //             console.log(item.read);
+    //             var booksFromDatabase = {
+    //                 title: item.title,
+    //                 author: item.author,
+    //                 pages: item.pages,
+    //                 read: item.read,
+    //             };
+    //             console.log(booksFromDatabase);
+    //             this.setState(
+    //                 {
+    //                     books: [...books, booksFromDatabase],
+    //                     newTitle: '',
+    //                     newAuthor: '',
+    //                     newBookread: false,
+    //                     newPages: 0,
+    //                 });
+    //         });
+    //     });
+    // }
+
     render() {
-        const { newTitle, newAuthor, newBookRead, newPages, books} = this.state;
+        const { newTitle, newAuthor, newBookRead, newPages, books } = this.state;
         return (
             <div className="container">
                 <h2>Biblioteca Virtual <i className="fas fa-book"></i></h2>
@@ -79,6 +151,7 @@ export default class Main extends Component {
                                     </select>
                                 </div>
                                 <button type="submit" className="btn" id="botao">Cadastrar</button>
+                                {/* <button type="button" onClick={this.initialize} className="btn" id="botao">Atualizar</button> */}
                             </form>
                         </div>
                     </div>
@@ -97,13 +170,13 @@ export default class Main extends Component {
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
-                                {books.map(book=> (
-                                <tbody>
-                                <td>{book.title}</td>
-                                <td>{book.author}</td>
-                                <td>{book.pages}</td>
-                                <td>{book.read}</td>
-                                </tbody>
+                                {books.map(book => (
+                                    <tbody>
+                                        <td>{book.title}</td>
+                                        <td>{book.author}</td>
+                                        <td>{book.pages}</td>
+                                        <td>{book.read}</td>
+                                    </tbody>
                                 ))}
                             </table>
                         </div>
