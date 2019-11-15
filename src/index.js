@@ -5,6 +5,7 @@ import App from './App';
 import './index.css';
 import * as firebase from 'firebase';
 
+
 var firebaseConfig = {
   apiKey: "AIzaSyDuRV70M-50x2-_awqGHGQOcF4aieFfWgk",
   authDomain: "library-react-15930.firebaseapp.com",
@@ -23,3 +24,5 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 );
+
+export default firebaseConfig;

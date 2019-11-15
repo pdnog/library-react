@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
+import config from '../index.js'
 
 export default class Main extends Component {
     state = {
@@ -23,6 +24,12 @@ export default class Main extends Component {
 
     handleReceberStatus = d => {
         this.setState({ newBookRead: d.target.value })
+    }
+
+
+    async componentDidMount(){
+        console.log("did mount")
+        this.initialize();
     }
 
     handleSubmitState = async z => {
@@ -52,38 +59,40 @@ export default class Main extends Component {
         firebase.database().ref().push(bookSchema);
     }
 
-    // initialize = async f => {
-    //     f.preventDefault();
-    //     const {
-    //         newTitle,
-    //         newAuthor,
-    //         newPages,
-    //         newBookRead,
-    //         books,
-    //     } = this.state;
-    //     console.log(this.state);
-    //     var ref = firebase.database().ref();
-    //     let booksDB = this.state.books;
-    //     ref.on("value", function (snapshot) {
-    //         snapshot.forEach(function (childSnapshot) {
-    //             var item = childSnapshot.val();
+    initialize = async f => {
+        console.log("initialize")
+        f.preventDefault();
+        const {
+            newTitle,
+            newAuthor,
+            newPages,
+            newBookRead,
+            books,
+        } = this.state;
+        // console.log(this.state);
+        var ref = firebase.database().ref();
+        let booksDB = this.state.books;
+        ref.on("value", function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
+                var item = childSnapshot.val();
 
-    //             var booksFromDatabase = {
-    //                 title: item.title,
-    //                 author: item.author,
-    //                 pages: item.pages,
-    //                 read: item.read,
-    //             };
-    //             booksDB.push(booksFromDatabase)
-    //         });
-    //     });
-    //     console.log(booksDB);
-    //     this.setState(
-    //         {
-    //             books: [booksDB],
-    //         });
-    //     console.log(this.state.books);
-    // }
+                var booksFromDatabase = {
+                    title: item.title,
+                    author: item.author,
+                    pages: item.pages,
+                    read: item.read,
+                };
+                booksDB.push(booksFromDatabase)
+            });
+        });
+        console.log("initialize 2")
+        // console.log(booksDB);
+        this.setState(
+            {
+                books: [booksDB],
+            });
+        console.log(this.state.books);
+    }
 
     // initialize = async f => {
     //     f.preventDefault();
@@ -124,6 +133,7 @@ export default class Main extends Component {
 
     render() {
         const { newTitle, newAuthor, newBookRead, newPages, books } = this.state;
+        console.log(this.state.books[0])
         return (
             <div className="container">
                 <h2>Biblioteca Virtual <i className="fas fa-book"></i></h2>
@@ -151,7 +161,7 @@ export default class Main extends Component {
                                     </select>
                                 </div>
                                 <button type="submit" className="btn" id="botao">Cadastrar</button>
-                                {/* <button type="button" onClick={this.initialize} className="btn" id="botao">Atualizar</button> */}
+                                <button type="button" onClick={this.initialize} className="btn" id="botao">Atualizar</button>
                             </form>
                         </div>
                     </div>
@@ -170,14 +180,14 @@ export default class Main extends Component {
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
-                                {books.map(book => (
+                                {books[0] ? books[0].map(book => (
                                     <tbody>
-                                        <td>{book.title}</td>
+                                        <td>{book.title+"teste"}</td>
                                         <td>{book.author}</td>
                                         <td>{book.pages}</td>
                                         <td>{book.read}</td>
                                     </tbody>
-                                ))}
+                                )) :null}
                             </table>
                         </div>
                     </div>
